@@ -75,26 +75,26 @@
 近年、データ解析や機械学習の発展により、大規模最適化問題を高速かつ安定に解く手法が求められている。
 特に、勾配降下法の収束性を理論的および実験的に改善することは重要な課題である。
 
-本論文では、第2章で提案手法を説明し、第3章で数値実験の結果を示す。最終的な考察および結論は [@sec:conclusion] にまとめる。
+本論文では、.ref {sec:method} で提案手法を説明し、.ref {sec:experiment} で数値実験の結果を示す。最終的な考察および結論は .ref {sec:conclusion} にまとめる。
 
 # 提案手法 {#sec:method}
 
 ## 問題設定
-次のような最小化問題を考える：
+.ref {eq:min} の最小化問題を考える：
 
-$ \min_{x \in \mathbb{R}^n} f(x) $
+$ \min_{x \in \mathbb{R}^n} f(x) $ {#eq:min}
 
-ここで $ f(x) $ は連続微分可能な関数とし、勾配降下法（Gradient Descent）は次式で表される。
+ここで $ f(x) $ は連続微分可能な関数とし、勾配降下法（Gradient Descent）は次式 .ref {eq:grad} で表される。
 
-$ x_{k+1} = x_k - \eta_k \nabla f(x_k) $
+$ x_{k+1} = x_k - \eta_k \nabla f(x_k) $ {#eq:grad}
 
 ただし $ \eta_k $ は学習率である。
 
 ## 改良手法
-本研究では、勾配の大きさに応じて動的に学習率を調整する「適応勾配法（Adaptive Gradient Method）」を提案する。  その概要を Algorithm 1 に示す。
+本研究では、勾配の大きさに応じて動的に学習率を調整する「適応勾配法（Adaptive Gradient Method）」を提案する。  その概要を .ref {code:grad} に示す。
 
-```python "Algorithm 1"
-# Algorithm 1: Adaptive Gradient Method
+```python "アルゴリズム 1: Adaptive Gradient Method" {#code:grad}
+# Adaptive Gradient Method
 def adaptive_gradient(f, grad_f, x0, eta0, epsilon=1e-6, max_iter=1000):
     x = x0
     eta = eta0
@@ -108,31 +108,69 @@ def adaptive_gradient(f, grad_f, x0, eta0, epsilon=1e-6, max_iter=1000):
 ```
 
 上記アルゴリズムでは、勾配ノルムに応じて学習率を減衰させることで、収束の安定性を高めている。
-このアプローチは、Adam や RMSProp のような既存の適応学習率法と共通の思想を持つ（詳細は [@sec:discussion]）。
+このアプローチは、Adam や RMSProp のような既存の適応学習率法と共通の思想を持つ（詳細は .ref {sec:discussion}）。
+
 
 # 数値実験 {#sec:experiment}
 
 ## 実験条件
-提案手法の有効性を確認するため、Rosenbrock 関数
+提案手法の有効性を確認するため、Rosenbrock 関数 .ref {eq:rosenbrock}
 
-$ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $
+$ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
 
-を対象として実験を行った。
-パラメータ設定を表 [@tbl:params] に示す。
+を対象として実験を行った。実験は、手順 .ref{fig:diagram} にて .ref{tbl:params} のパラメータ設定で実施した。
+
+.mermaid caption:{My Mermaid diagram.}
+    flowchart TD
+        A([Start]) --> B[Enter username and password]
+        B --> C{Correct?}
+        C -- Yes --> D[Redirect to dashboard]
+        C -- No --> E[Show error message]
+        D --> F([End])
+        E --> F
+{#fig:diagram}
+
+パラメータ設定を表 .ref {tbl:params} に示す。
 
 | パラメータ | 値 | 説明 |
 |------------|----|------|
 |期点 $ (x_0, y_0) $ | (−1.2, 1.0) | 標準設定 |
 |学習率 $ \eta_0 $ | 0.01 | 初期値 |
 |最大反復回数 | 1000 | 収束条件まで |
+"実験パラメータ設定" {#tbl:params}
 
-: 実験パラメータ設定 {#tbl:params}
+# 結果 {#sec:result}
 
-# 結果
+提案手法の結果を .ref {fig:bar} .ref {fig:xy} に示す。従来の勾配降下法に比べ、提案手法は初期段階での収束が速いことが確認できた。 .ref {sales-fig} は四半期別売上推移を示す。
 
-提案手法の結果を図 [@fig:conv] に示す。従来の勾配降下法に比べ、提案手法は初期段階での収束が速いことが確認できた。
 
-!(50%)[Quarkdown](image/logo.png)
+.xychart caption:{四半期別売上推移}
+    - type: line
+    - x: ["Q1", "Q2", "Q3", "Q4"]
+    - y: [10, 18, 25, 30]
+{#sales-fig}
+
+.xychart caption:{"結果の嘘グラフ"} bars:{yes} x:{Months} y:{Revenue} yrange:{100..} 
+    - 250
+    - 500
+    - 350
+    - 450
+    - 400
+    - 500
+    - 600
+    {#fig:bar}
+
+.xychart caption:{"嘘グラフその2"}
+    .repeat {100}
+        .1::pow {2}::divide {100}
+    
+    .repeat {100}
+        .1::logn::multiply {10}
+
+
+また、.ref {fig:bar} を Quarkdown 変換し第1、第2主成分による2次元平面へ射影することで .ref {fig:logo} が得られた。
+
+!(50%)[Quarkdown](image/logo.png "Quarkdown icon") {#fig:logo}
 
 # 考察 {#sec:discussion}
 
