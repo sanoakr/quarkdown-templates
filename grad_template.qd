@@ -2,7 +2,24 @@
 .doctype {paged}
 .doclang {Japanese}
 .theme {paperwhite} layout:{latex}
-.pageformat size:{A4} margin:{1.5cm}
+
+.pageformat size:{a4} margin:{1.5cm}
+.pagemargin {bottomcenter}
+    .text{}
+.css
+    .quarkdown h1 {font-size: 1.5rem !important;}
+    .quarkdown h2 {font-size: 1.3rem !important;}
+    .quarkdown h3 {font-size: 1.15rem !important;}
+    .quarkdown h4 {font-size: 1.05rem !important;}
+    /* Cross-reference: show Japanese style for section references */
+    /* Top-level sections (no dot): 第1章 */
+    .quarkdown .cross-reference[data-localized-kind="セクション"][data-location]:not([data-location*="."])::before {
+        content: "第" attr(data-location) "章" !important;
+    }
+    /* Sub-sections (has dot): 第2.1節 */
+    .quarkdown .cross-reference[data-localized-kind="セクション"][data-location*="."]::before {
+        content: "第" attr(data-location) "節" !important;
+    }
 
 .var {author} {龍谷 太郎}
 .var {affiliation} {龍谷大学先端理工学部 数理・情報科学課程}
@@ -10,34 +27,13 @@
 .var {maintitle} {卒業論文見本}
 .var {subtitle}  {副題は省略可能}
 
-<!-- 卒論テンプレート -->
-.pagemargin {bottomcenter}
-    .text {}
-
 <!-- ナンバリング -->
 .numbering
     - headings: 1.1
-    - equations: 1.1
+    - equations: (1.1)
     - figures: 1.1
     - tables: 1.1
     - citations: 1.1
-
-<!-- 概要 -->
-.function {abstractpage}
-    abstract:
-    .column cross:{center}
-        .text {202X年度 卒業論文} size:{normal}
-        .whitespace height:{5mm}
-        .text {.maintitle} size:{large} weight:{bold}
-        .text {.subtitle::otherwise {}}
-    .column cross:{end}
-        .text {.affiliation}
-        .text {.id .author}
-        .text {指導教員 佐野 彰}
-    .column cross:{center}
-        .text {概要} size:{normal} weight:{bold}
-    .abstract
-    <<<    
 
 <!-- タイトルページ -->
 .function {titlepage}
@@ -52,7 +48,24 @@
         .text {.affiliation}
         .text {.id .author}
         .text {指導教員 佐野 彰}
-
+    
+<!-- 概要ページ -->
+.function {abstractpage}
+    abstract:
+    .column cross:{center}
+        .text {202X年度 卒業論文} size:{normal}
+        .whitespace height:{5mm}
+        .text {.maintitle} size:{large} weight:{bold}
+        .text {.subtitle::otherwise {}}
+    .column cross:{end}
+        .text {.affiliation}
+        .text {.id .author}
+        .text {指導教員 佐野 彰}
+    .column cross:{center}
+        .text {概要} size:{normal} weight:{bold}
+    .abstract
+    <<<
+<!-- ここから論文データ -->
 <!-- 概要 -->
 .var {abstract}
     　本概要では、研究の背景、目的、方法、結果、および結論を簡潔にまとめる。まず、研究の背景として、この研究がどのような問題意識や社会的・学術的な必要性から出発したのかを説明する。たとえば、現在どのような課題が存在しており、それを解決するためにどのような方向性が求められているのかを述べる。背景は研究の意義を示す重要な部分であり、過剰な専門的説明ではなく、読者が研究の位置づけを理解できるようにまとめる。  <!-- 改行は空白2つ -->
@@ -65,9 +78,16 @@
     　本概要全体を通して、論文の要点を1ページにまとめ、本文を読まなくても研究の全体像が理解できることを目指す。図表や参考文献は基本的に用いず、平易で正確な文章で記述することが望ましい。
 .abstractpage {.abstract}
 
-<!-- ここから論文データ -->
+<!-- タイトルページ（ページ番号なし） -->
 .titlepage
+<!-- 目次（ページ番号なし） -->
 .tableofcontents maxdepth:{2}
+<!-- 4ページ目以降: 本文（ページ番号1から開始） -->
+.var {currentpage} {11}
+<!--
+.pagemargin {bottomcenter}
+    .currentpage
+-->
 
 # はじめに {#sec:intro}
 
@@ -118,7 +138,7 @@ def adaptive_gradient(f, grad_f, x0, eta0, epsilon=1e-6, max_iter=1000):
 
 $ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
 
-を対象として実験を行った。実験は、手順 .ref{fig:diagram} にて .ref{tbl:params} のパラメータ設定で実施した。
+を対象として実験を行った。実験は、手順 .ref{fig:diagram} の方法を用いて .ref{tbl:params} のパラメータ設定で実施した。
 
 .mermaid caption:{My Mermaid diagram.}
     flowchart TD
@@ -189,14 +209,16 @@ $ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
 今後は、大規模データセットへの応用やハイパーパラメータ自動調整への拡張を行う予定である。
 
 <<<
-**謝辞**
+##! 謝辞
 
 本研究を進めるにあたり、指導をいただいた佐藤花子教授、ならびに実験協力をいただいた研究室の皆様に感謝申し上げる。
 
 <<<
-**参考文献**
+##! 参考文献
 
 1.	Boyd, S. and Vandenberghe, L., Convex Optimization, Cambridge University Press, 2004.
 2.	Kingma, D. P. and Ba, J., “Adam: A Method for Stochastic Optimization”, ICLR, 2015.
 3.	Nocedal, J. and Wright, S., Numerical Optimization, Springer, 2006.
 
+<<<
+##! 付録
