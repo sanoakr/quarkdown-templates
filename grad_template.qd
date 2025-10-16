@@ -1,0 +1,164 @@
+.docname {卒業論文見本}
+.doctype {paged}
+.doclang {Japanese}
+.theme {paperwhite} layout:{latex}
+.pageformat size:{A4} margin:{1.5cm}
+
+.var {author} {龍谷 太郎}
+.var {affiliation} {龍谷大学先端理工学部 数理・情報科学課程}
+.var {id} {Y1234567}
+.var {maintitle} {卒業論文見本}
+.var {subtitle}  {副題は省略可能}
+
+<!-- 卒論テンプレート -->
+.pagemargin {bottomcenter}
+    .text {}
+
+<!-- ナンバリング -->
+.numbering
+    - headings: 1.1
+    - equations: 1.1
+    - figures: 1.1
+    - tables: 1.1
+    - citations: 1.1
+
+<!-- 概要 -->
+.function {abstractpage}
+    abstract:
+    .column cross:{center}
+        .text {202X年度 卒業論文} size:{normal}
+        .whitespace height:{5mm}
+        .text {.maintitle} size:{large} weight:{bold}
+        .text {.subtitle::otherwise {}}
+    .column cross:{end}
+        .text {.affiliation}
+        .text {.id .author}
+        .text {指導教員 佐野 彰}
+    .column cross:{center}
+        .text {概要} size:{normal} weight:{bold}
+    .abstract
+    <<<    
+
+<!-- タイトルページ -->
+.function {titlepage}
+    .whitespace height:{5cm}
+    .column cross:{center}
+        .text {202X年度 卒業論文}
+        .whitespace height:{10mm}
+        .text {.maintitle} size:{large} weight:{bold}
+        .text {.subtitle::otherwise {}} size:{normal}
+    .whitespace height:{10cm}
+    .column cross:{center} gap:{3mm}
+        .text {.affiliation}
+        .text {.id .author}
+        .text {指導教員 佐野 彰}
+
+<!-- 概要 -->
+.var {abstract}
+    　本概要では、研究の背景、目的、方法、結果、および結論を簡潔にまとめる。まず、研究の背景として、この研究がどのような問題意識や社会的・学術的な必要性から出発したのかを説明する。たとえば、現在どのような課題が存在しており、それを解決するためにどのような方向性が求められているのかを述べる。背景は研究の意義を示す重要な部分であり、過剰な専門的説明ではなく、読者が研究の位置づけを理解できるようにまとめる。  <!-- 改行は空白2つ -->
+    　次に、研究の目的を明確に記述する。この研究で何を明らかにしたいのか、どのような課題を解決しようとしているのかを一文または数文で示す。目的は背景と対応しており、研究全体の方向性を示す中心的要素となる。  
+    　続いて、研究の方法を簡潔に述べる。ここでは、どのような手法・理論・実験・観測・解析を行ったのかを概要レベルで説明する。装置や条件の詳細に踏み込む必要はなく、研究手段の全体像が分かる程度にまとめることが望ましい。  
+    　次に、主な結果を簡潔に示す。実験や解析によって得られた主要な成果、特徴的な傾向、確認できた現象などを具体的な数値または定性的表現でまとめる。ここでは、研究の成果を端的に伝えることが重要であり、データの詳細や考察は記載しない。  
+    　最後に、結論および今後の課題を述べる。研究の結果から導かれた結論を明確にし、その成果がどのような意義を持つのかを説明する。また、残された課題や今後の発展の可能性について簡潔に触れることで、研究の広がりを示す。  
+
+    <!-- 段落は空白行で -->
+    　本概要全体を通して、論文の要点を1ページにまとめ、本文を読まなくても研究の全体像が理解できることを目指す。図表や参考文献は基本的に用いず、平易で正確な文章で記述することが望ましい。
+.abstractpage {.abstract}
+
+<!-- ここから論文データ -->
+.titlepage
+.tableofcontents maxdepth:{2}
+
+# はじめに {#sec:intro}
+
+本研究では、数値最適化アルゴリズムの改良を目的とする。
+近年、データ解析や機械学習の発展により、大規模最適化問題を高速かつ安定に解く手法が求められている。
+特に、勾配降下法の収束性を理論的および実験的に改善することは重要な課題である。
+
+本論文では、第2章で提案手法を説明し、第3章で数値実験の結果を示す。最終的な考察および結論は [@sec:conclusion] にまとめる。
+
+# 提案手法 {#sec:method}
+
+## 問題設定
+次のような最小化問題を考える：
+
+$ \min_{x \in \mathbb{R}^n} f(x) $
+
+ここで $ f(x) $ は連続微分可能な関数とし、勾配降下法（Gradient Descent）は次式で表される。
+
+$ x_{k+1} = x_k - \eta_k \nabla f(x_k) $
+
+ただし $ \eta_k $ は学習率である。
+
+## 改良手法
+本研究では、勾配の大きさに応じて動的に学習率を調整する「適応勾配法（Adaptive Gradient Method）」を提案する。  その概要を Algorithm 1 に示す。
+
+```python "Algorithm 1"
+# Algorithm 1: Adaptive Gradient Method
+def adaptive_gradient(f, grad_f, x0, eta0, epsilon=1e-6, max_iter=1000):
+    x = x0
+    eta = eta0
+    for k in range(max_iter):
+        g = grad_f(x)
+        if np.linalg.norm(g) < epsilon:
+            break
+        eta = eta0 / (1 + 0.1 * np.linalg.norm(g))
+        x = x - eta * g
+    return x
+```
+
+上記アルゴリズムでは、勾配ノルムに応じて学習率を減衰させることで、収束の安定性を高めている。
+このアプローチは、Adam や RMSProp のような既存の適応学習率法と共通の思想を持つ（詳細は [@sec:discussion]）。
+
+# 数値実験 {#sec:experiment}
+
+## 実験条件
+提案手法の有効性を確認するため、Rosenbrock 関数
+
+$ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $
+
+を対象として実験を行った。
+パラメータ設定を表 [@tbl:params] に示す。
+
+| パラメータ | 値 | 説明 |
+|------------|----|------|
+|期点 $ (x_0, y_0) $ | (−1.2, 1.0) | 標準設定 |
+|学習率 $ \eta_0 $ | 0.01 | 初期値 |
+|最大反復回数 | 1000 | 収束条件まで |
+
+: 実験パラメータ設定 {#tbl:params}
+
+# 結果
+
+提案手法の結果を図 [@fig:conv] に示す。従来の勾配降下法に比べ、提案手法は初期段階での収束が速いことが確認できた。
+
+!(50%)[Quarkdown](image/logo.png)
+
+# 考察 {#sec:discussion}
+
+本手法は勾配の大きさに応じて学習率を調整するため、初期段階では大きく、収束近傍では小さくなる。
+これにより、探索効率と安定性の両立が実現できた。
+一方で、勾配が極端に小さい領域では更新幅が小さくなりすぎる問題が見られた。
+この点は、下限値を設定することで改善可能である。
+
+また、Adam などの手法が勾配の移動平均を用いるのに対し、本手法は勾配ノルムに基づく単純な調整のみを行うため、計算コストが軽いという利点がある。
+今後は、ハイブリッド法や確率的勾配降下（SGD）との組み合わせを検討する。
+
+# 結論 {#sec:conclusion}
+
+本研究では、勾配ノルムに基づく動的学習率調整法を提案した。
+理論的解析および数値実験の結果、提案手法は収束の安定性と速度の両面で従来法を上回ることが確認された。
+今後は、大規模データセットへの応用やハイパーパラメータ自動調整への拡張を行う予定である。
+
+<<<
+**謝辞**
+
+本研究を進めるにあたり、指導をいただいた佐藤花子教授、ならびに実験協力をいただいた研究室の皆様に感謝申し上げる。
+
+<<<
+**参考文献**
+
+1.	Boyd, S. and Vandenberghe, L., Convex Optimization, Cambridge University Press, 2004.
+2.	Kingma, D. P. and Ba, J., “Adam: A Method for Stochastic Optimization”, ICLR, 2015.
+3.	Nocedal, J. and Wright, S., Numerical Optimization, Springer, 2006.
+
