@@ -81,7 +81,7 @@
 <!-- タイトルページ（ページ番号なし） -->
 .titlepage
 <!-- 目次（ページ番号なし） -->
-.tableofcontents maxdepth:{2}
+.tableofcontents maxdepth:{2} includeunnumbered:{true} includebibliography:{true}
 <!-- 4ページ目以降: 本文（ページ番号1から開始） -->
 .var {currentpage} {11}
 <!--
@@ -208,13 +208,13 @@ $ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
 理論的解析および数値実験の結果、提案手法は収束の安定性と速度の両面で従来法を上回ることが確認された。
 今後は、大規模データセットへの応用やハイパーパラメータ自動調整への拡張を行う予定である。
 
-<<<
+<<
 #! 謝辞
 
 本研究を進めるにあたり、指導をいただいた佐藤花子教授、ならびに実験協力をいただいた研究室の皆様に感謝申し上げる。
 
 .bibliography {references.bib} style:{ieeetr}
 
-
 <<<
 #! 付録
+
