@@ -128,7 +128,7 @@ def adaptive_gradient(f, grad_f, x0, eta0, epsilon=1e-6, max_iter=1000):
 ```
 
 上記アルゴリズムでは、勾配ノルムに応じて学習率を減衰させることで、収束の安定性を高めている。
-このアプローチは、Adam .cite{Manual} や RMSProp .cite{Mastherthesis} のような既存の適応学習率法と共通の思想を持つ（詳細は .ref {sec:discussion}）。
+このアプローチは、Adam .cite{Manual} や RMSProp .cite{Masthersthesis} のような既存の適応学習率法と共通の思想を持つ（詳細は .ref {sec:discussion}）。
 
 
 # 数値実験 {#sec:experiment}
