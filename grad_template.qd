@@ -163,14 +163,13 @@ $ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
 
 提案手法の結果を .ref {fig:bar} .ref {fig:xy} に示す。従来の勾配降下法に比べ、提案手法は初期段階での収束が速いことが確認できた。 .ref {sales-fig} は四半期別売上推移を示す。
 
-
 .xychart caption:{四半期別売上推移}
     - type: line
     - x: ["Q1", "Q2", "Q3", "Q4"]
     - y: [10, 18, 25, 30]
-{#sales-fig}
+{#sales-fig}    
 
-.xychart caption:{"結果の嘘グラフ"} bars:{yes} x:{Months} y:{Revenue} yrange:{100..} 
+.xychart caption:{"結果の嘘グラフ"} bars:{yes} x:{Months} y:{Revenue} yrange:{100..}
     - 250
     - 500
     - 350
@@ -178,7 +177,7 @@ $ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
     - 400
     - 500
     - 600
-    {#fig:bar}
+{#fig:bar}
 
 .xychart caption:{"嘘グラフその2"}
     .repeat {100}
@@ -186,9 +185,10 @@ $ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
     
     .repeat {100}
         .1::logn::multiply {10}
+{#fig:line}
 
 
-また、.ref {fig:bar} を Quarkdown 変換し第1、第2主成分による2次元平面へ射影することで .ref {fig:logo} が得られた。
+また、.ref {fig:bar} を .ref{fig:line} で Quarkdown 変換し第1、第2主成分による2次元平面へ射影することで .ref {fig:logo} が得られた。
 
 !(50%)[Quarkdown](image/logo.png "Quarkdown icon") {#fig:logo}
 
@@ -208,7 +208,7 @@ $ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
 理論的解析および数値実験の結果、提案手法は収束の安定性と速度の両面で従来法を上回ることが確認された。
 今後は、大規模データセットへの応用やハイパーパラメータ自動調整への拡張を行う予定である。
 
-<<
+<<<
 #! 謝辞
 
 本研究を進めるにあたり、指導をいただいた佐藤花子教授、ならびに実験協力をいただいた研究室の皆様に感謝申し上げる。
