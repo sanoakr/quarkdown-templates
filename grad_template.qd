@@ -80,16 +80,15 @@
 
 <!-- タイトルページ（ページ番号なし） -->
 .titlepage
+
 <!-- 目次（ページ番号なし） -->
-.tableofcontents maxdepth:{2} includeunnumbered:{true} includebibliography:{true}
+.tableofcontents maxdepth:{2} includeunnumbered:{true} <!-- includebibliography:{true} -->
+
 <!-- 4ページ目以降: 本文（ページ番号1から開始） -->
-.var {currentpage} {11}
-<!--
+# はじめに {#sec:intro}
+.resetpagenumber startFrom:{1}
 .pagemargin {bottomcenter}
     .currentpage
--->
-
-# はじめに {#sec:intro}
 
 本研究では、数値最適化アルゴリズムの改良を目的とする。
 近年、データ解析や機械学習の発展により、大規模最適化問題を高速かつ安定に解く手法が求められている .cite {Article}-.cite {Inbook}。
