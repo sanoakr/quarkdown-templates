@@ -86,7 +86,7 @@
 
 <!-- 4ページ目以降: 本文（ページ番号1から開始） -->
 # はじめに {#sec:intro}
-.resetpagenumber startFrom:{1}
+.resetpagenumber
 .pagemargin {bottomcenter}
     .currentpage
 
@@ -147,7 +147,7 @@ $ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
         C -- No --> E[Show error message]
         D --> F([End])
         E --> F
-{#fig:diagram}
+<!--{#fig:diagram}-->
 
 パラメータ設定を表 .ref {tbl:params} に示す。
 
@@ -166,7 +166,7 @@ $ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
     - type: line
     - x: ["Q1", "Q2", "Q3", "Q4"]
     - y: [10, 18, 25, 30]
-{#sales-fig}    
+<!--{#sales-fig}-->
 
 .xychart caption:{"結果の嘘グラフ"} bars:{yes} x:{Months} y:{Revenue} yrange:{100..}
     - 250
@@ -176,7 +176,7 @@ $ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
     - 400
     - 500
     - 600
-{#fig:bar}
+<!--{#fig:bar}-->
 
 .xychart caption:{"嘘グラフその2"}
     .repeat {100}
@@ -184,7 +184,7 @@ $ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 $ {#eq:rosenbrock}
     
     .repeat {100}
         .1::logn::multiply {10}
-{#fig:line}
+<!--{#fig:line}-->
 
 
 また、.ref {fig:bar} を .ref{fig:line} で Quarkdown 変換し第1、第2主成分による2次元平面へ射影することで .ref {fig:logo} が得られた。
